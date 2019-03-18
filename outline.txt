@@ -1,0 +1,97 @@
+Experimental Setups
+	reverse-turing-test
+		human-vs-TRPO
+		human-vs-DQ
+	human-v-AI
+		human-vs-TRPO
+		human-vs-DQ
+	AI-v-AI
+		TRPO-v-TRPO
+		DQ-v-DQ
+
+Games
+	iterative PD
+	Battles of the Sexes
+	Chicken
+	Centipede
+	Ultimatum
+
+Process
+	Training
+	3 iterations
+	Survey
+
+Breakdown
+	game page
+		login process
+			explanation of the game
+			input form asking for id
+		game 
+			loads appropriate agent based on url
+			track total iterations
+			request = {"id": Mturk person, "history": [[1, -1], [1, 1], [0, 0]}
+			decision
+			push request and refresh
+			if iteration == 3
+				send entire history by iteration
+				go to survey page
+	survey
+		survery questions
+		save results into separate object
+		save both the results and the history into an entry
+		give out code to get paid
+
+
+
+Brain Dump
+
+	Because the survey is at the end, I can create a flashcard variable in the url identifying the person 
+
+	Do I need a login page where they put their MTurk code? 
+		That could create an entry in the db
+
+	Do I do the entire performance as a single entry? 
+
+	Is there a way I can avoid react? 
+		I need to track the history 
+
+	I could make them all play the same thing after they login, until it ends
+		Essentially a separate server for each agent
+
+	Keep it simple, not react
+
+	I could have a complex yet patterned request as a PUT kinda like I do on debate-match
+		{"id": Mturk person, "history": [[1, -1], [1, 1], [0, 0]}
+			where 1 represetn cooperation, -1 represnts defection, and 0 is yet to come
+
+	First thing is I need to know what the agents need 
+		make the agents first to figure out how to represent the state
+		Make the state part of the put request
+
+	Each page should have a walkthrough, which can be a simple link 
+		that should be the default page for every agent
+
+	seems like I'm convering towards an agent + game page
+		TRPO-centipede...
+		how do I do the reverse turing test
+		reverse-TRPO
+
+	4 conditions (2 reverse, 2 straightforward) * 5 games * 30 participants = 600 participants
+		agent + game = 20 urls
+		5 pages though because I can load a config based on a variable
+		5 pages but 20 tasks on MTurk 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

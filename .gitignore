@@ -1,0 +1,6 @@
+env/
+.envrc
+db.sqlite3
+static/
+*.pyc
+__pycache__
