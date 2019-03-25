@@ -81,16 +81,14 @@ Brain Dump
 		5 pages though because I can load a config based on a variable
 		5 pages but 20 tasks on MTurk 
 
+	Do I have separate agent for every game and configuration? 
+		I could make a class that imports the right agent as a conditional 
+		there are 2 agent types, and 5 games
+		I need a separate directory to store the checkpoints
+		I should just have a complex function instead
 
 
-
-
-
-
-
-
-
-
+	Ok, so the process would be that the react front-end makes a POST and the reward calculation is given at the server level
 
 
 

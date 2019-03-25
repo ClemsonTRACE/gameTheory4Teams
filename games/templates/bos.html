@@ -3,6 +3,7 @@
 </head>
 <body>
 	<h2 class="center-align">Battle of the Sexes</h2>
+	<h3>{{ agent }}<h3>
 	<div class="row">
 		<table>
 			<tbody>
@@ -25,14 +26,17 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col l4"></div>
-		<div class="col l2">
-			<button class='btn'>Opera</button>
-		</div>
-		<div class="col l2">
-			<button class='btn'>Game</button>
-		</div>
-		<div class="col l4"></div>
+		<form action="" method = "POST">
+		    {% csrf_token %}
+			<div class="col l4"></div>
+			<div class="col l2">
+				<button class='btn' type="submit" name="move" value="opera">Opera</button>
+			</div>
+			<div class="col l2">
+				<button class='btn' type="submit" name="move" value="game">Game</button>
+			</div>
+			<div class="col l4"></div>
+		</form>
 	</div>
 
 
