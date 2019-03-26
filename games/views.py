@@ -24,8 +24,16 @@ def twoByTwo(request, gameType, agentType):
 
 
 	elif(request.method == "POST"):
-		r = json.loads(request.body)
-		r = json.loads(r)
+		print(request.body)
+
+		try:
+			r = json.loads(request.body)
+			r = json.loads(r)
+		except:
+			r = request.body.decode('utf-8')
+			r = json.dumps(r)
+			r = json.loads(r)
+			r = json.loads(r)
 		print(r)
 
 		print(r["gameState"])

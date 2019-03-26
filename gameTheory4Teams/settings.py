@@ -26,7 +26,8 @@ SECRET_KEY = '^aqqk2g7l3q9%fs4=ze^x%j^xx4rvt5e1v=&8l@o$(5r@3$x_0'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-"localhost"
+"localhost", 
+"localhost:3000"
 ]
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "games",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
@@ -49,7 +51,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', 
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',
+)
+CORS_ORIGIN_REGEX_WHITELIST = (
+    'localhost:3000',
+)
 
 ROOT_URLCONF = 'gameTheory4Teams.urls'
 
