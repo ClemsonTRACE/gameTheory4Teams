@@ -52,6 +52,7 @@ def twoByTwo(request, gameType, agentType):
 		if int(turn) == int(r["numTurns"]): 
 			if int(epoch) == int(r["numEpochs"]):
 				r["status"] = True
+				#add the datasaving part here
 			else:
 				r["turn"] = 0
 				r["epoch"] = int(epoch) + 1
