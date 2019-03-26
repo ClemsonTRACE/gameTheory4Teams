@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .utils import get_agent, payoffs
 import json
 from django.http import JsonResponse
+from pprint import pprint
 
 
 # Create your views here.
@@ -24,7 +25,6 @@ def twoByTwo(request, gameType, agentType):
 
 
 	elif(request.method == "POST"):
-		print(request.body)
 
 		try:
 			r = json.loads(request.body)
@@ -34,25 +34,33 @@ def twoByTwo(request, gameType, agentType):
 			r = json.dumps(r)
 			r = json.loads(r)
 			r = json.loads(r)
-		print(r)
+		pprint(r)
 
-		print(r["gameState"])
-		testState = list(r["gameState"].values())
-		print(testState)
+		epoch = str(r["epoch"])
+		turn = str(r["turn"])
+
+		testState = list(r["gameState"][epoch].values())
 		testState = [testState]
 		action = agent.act(testState)
-		print("action", action)
 
 		stuff = payoffs(gameType, action, r["move"])
-		print("payoffs", stuff)
+
+		r["gameState"][epoch][turn] = [int(action), int(r["move"])]
+		r["payoffs"][epoch][turn] = [stuff[0], stuff[1]]
+		r["turn"] = int(turn) + 1
+
+		if int(turn) == int(r["numTurns"]): 
+			if int(epoch) == int(r["numEpochs"]):
+				r["status"] = True
+			else:
+				r["turn"] = 0
+				r["epoch"] = int(epoch) + 1
+
+
+		pprint(r)
 
 		# return render(request, "bos.html", {"agent": agentType})
-		return JsonResponse(
-			{
-				"moves": [int(action), int(r["move"])],
-				"payoffs": stuff
-			}
-		)
+		return JsonResponse(r)
 
 def centipede(request, agentType):
 	return render(request, "centipede.html")
