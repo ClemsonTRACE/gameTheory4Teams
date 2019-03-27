@@ -68,30 +68,31 @@ def get_agent(game, agentType):
 		agent.restore(directory=checkpointPath, filename=None)
 	except Exception as e:
 		print("\nrestoration failed\n")
-		checkpointPath = base_path + "/agents/" + game + "/" + agentType + "/"
+		print(e)
+		# checkpointPath = base_path + "/agents/" + game + "/" + agentType + "/"
 
-		agent.initialize()
+		# agent.initialize()
 
 
-		for x in tqdm(range(10000)):
+		# for x in tqdm(range(10000)):
 
-			testState = np.full(config[game]["states"]["shape"], 0)
+		# 	testState = np.full(config[game]["states"]["shape"], 0)
 
-			for i in range(10):
-				moveA = agent.act(testState)
-				moveB = agent.act(testState)
-				rewards = payoffs(game, moveA, moveB)
-				if i < 10:
-					agent.observe(reward=rewards[0], terminal=False)
-					agent.observe(reward=rewards[1], terminal=False)
-				else: 
-					agent.observe(reward=rewards[0], terminal=True)
-					agent.observe(reward=rewards[1], terminal=True)
+		# 	for i in range(10):
+		# 		moveA = agent.act(testState)
+		# 		moveB = agent.act(testState)
+		# 		rewards = payoffs(game, moveA, moveB)
+		# 		if i < 10:
+		# 			agent.observe(reward=rewards[0], terminal=False)
+		# 			agent.observe(reward=rewards[1], terminal=False)
+		# 		else: 
+		# 			agent.observe(reward=rewards[0], terminal=True)
+		# 			agent.observe(reward=rewards[1], terminal=True)
 
-				testState[i] = [[moveA], [moveB]]
+		# 		testState[i] = [[moveA], [moveB]]
 
-		agent.save(directory=checkpointPath, filename=None)
-		print("saving successful")
+		# agent.save(directory=checkpointPath, filename=None)
+		# print("saving successful")
 
 	return agent
 
