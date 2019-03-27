@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('games/twoByTwo/<str:gameType>/<str:agentType>', views.twoByTwo),
     path('games/centipede/<str:agentType>', views.centipede),
-    path('games/ultimatum/<str:agentType>', views.ultimatum)
+    path('games/ultimatum/<str:agentType>', views.ultimatum),
+    path('games/pull', views.pull)
 ]

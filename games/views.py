@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from .utils import get_agent, payoffs
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from pprint import pprint
 from .models import Game
+from django.core import serializers
 
 
 # Create your views here.
@@ -76,6 +77,16 @@ def twoByTwo(request, gameType, agentType):
 
 		# return render(request, "bos.html", {"agent": agentType})
 		return JsonResponse(r)
+
+def pull(request):
+	dataPoints = Game.objects.values()
+	stuff = {}
+	i = 0
+	for el in dataPoints:
+		stuff[i] = el
+		i += 1
+
+	return JsonResponse(stuff)
 
 def centipede(request, agentType):
 	return render(request, "centipede.html")
