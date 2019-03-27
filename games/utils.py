@@ -68,9 +68,9 @@ def get_agent(game, agentType):
 		agent.restore(directory=checkpointPath, filename=None)
 		print("restoration successful")
 	except Exception as e:
-		print("\nrestoration failed\n")
 		fuck = subprocess.check_output("ls", shell=True)
 		print(fuck)
+		print("\nrestoration failed\n")
 		checkpointPath = base_path + "/agents/" + game + "/" + agentType + "/"
 		agent.restore(directory=checkpointPath, filename=None)
 		print("restoration successful after second attempt")
