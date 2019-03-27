@@ -1,2 +1,2 @@
-model_checkpoint_path: "model-10"
-all_model_checkpoint_paths: "model-10"
+model_checkpoint_path: "/Users/lbarberiscanoni/Lorenzo/Github/gameTheory4Teams_server/games/agents/bos/dqn/model-10"
+all_model_checkpoint_paths: "/Users/lbarberiscanoni/Lorenzo/Github/gameTheory4Teams_server/games/agents/bos/dqn/model-10"

@@ -15,7 +15,7 @@ def get_agent(game, agentType):
 	config = {
 		"bos": {
 			"states": {
-				"type":'float', "shape": (3,2, 1,) 
+				"type":'float', "shape": (10,2, 1,) 
 			},
 			"actions": {
 				"type": "int", "num_values": 2
@@ -23,7 +23,7 @@ def get_agent(game, agentType):
 		},
 		"pd": {
 			"states": {
-				"type":'float', "shape": (3,2, 1,) 
+				"type":'float', "shape": (10,2, 1,) 
 			},
 			"actions": {
 				"type": "int", "num_values": 2
@@ -31,7 +31,7 @@ def get_agent(game, agentType):
 		},
 		"hawkdove": {
 			"states": {
-				"type":'float', "shape": (3,2, 1,) 
+				"type":'float', "shape": (10,2, 1,) 
 			},
 			"actions": {
 				"type": "int", "num_values": 2
@@ -65,7 +65,7 @@ def get_agent(game, agentType):
 	try:
 		agent.restore(directory=checkpointPath, filename=None)
 	except Exception as e:
-		print("\nrestoriation failed\n")
+		print("\nrestoration failed\n")
 		# print(e)
 		agent.initialize()
 		for i in range(10):
@@ -120,6 +120,7 @@ if __name__ == "__main__":
 	gameList = ["bos", "pd", "hawkdove"]
 	agentList = ["ppo", "vpg", "dqn"]
 
+	subprocess.call("mkdir agents/", shell=True)
 	for game in gameList:
 		subprocess.call("mkdir agents/" + game, shell=True)
 		for agentType in agentList:
