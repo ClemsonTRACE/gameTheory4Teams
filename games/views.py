@@ -1,16 +1,17 @@
 from django.shortcuts import render
-from .utils import get_agent, payoffs
+from .utils import get_agent, payoffs, setup
 import json
 from django.http import JsonResponse, HttpResponse
 from pprint import pprint
 from .models import Game
 from django.core import serializers
+import time
+
+swarm = setup()
 
 
 # Create your views here.
 def twoByTwo(request, gameType, agentType):
-	agent = get_agent(gameType, agentType)
-
 
 	if (request.method == "GET"):
 
@@ -27,6 +28,7 @@ def twoByTwo(request, gameType, agentType):
 
 
 	elif(request.method == "POST"):
+		agent = swarm[gameType][agentType]
 
 		try:
 			r = json.loads(request.body)
@@ -36,14 +38,20 @@ def twoByTwo(request, gameType, agentType):
 			r = json.dumps(r)
 			r = json.loads(r)
 			r = json.loads(r)
-		pprint(r)
+		# pprint(r)
 
 		epoch = str(r["epoch"])
 		turn = str(r["turn"])
 
 		testState = list(r["gameState"][epoch].values())
 		testState = [testState]
-		action = agent.act(testState)
+		try:
+			action = agent.act(testState)
+		except Exception as e:
+			print(e)
+			time.sleep(2)
+			action = agent.act(testState)
+
 
 		stuff = payoffs(gameType, action, r["move"])
 
@@ -72,8 +80,8 @@ def twoByTwo(request, gameType, agentType):
 				r["turn"] = 0
 				r["epoch"] = int(epoch) + 1
 
-		agent.close()
-		
+		# agent.close()
+
 		pprint(r)
 
 		# return render(request, "bos.html", {"agent": agentType})

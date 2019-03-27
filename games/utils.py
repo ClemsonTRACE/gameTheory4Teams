@@ -66,11 +66,12 @@ def get_agent(game, agentType):
 
 	try:
 		agent.restore(directory=checkpointPath, filename=None)
+		print("restoration successful")
 	except Exception as e:
 		print("\nrestoration failed\n")
-		print(e)
-		# checkpointPath = base_path + "/agents/" + game + "/" + agentType + "/"
-
+		checkpointPath = base_path + "/agents/" + game + "/" + agentType + "/"
+		agent.restore(directory=checkpointPath, filename=None)
+		print("restoration successful after second attempt")
 		# agent.initialize()
 
 
@@ -134,15 +135,29 @@ def payoffs(game, aiMove, humanMove):
 
 	return config[game][aiMove][humanMove]
 
-if __name__ == "__main__":
-
-
+def setup():
 	gameList = ["bos", "pd", "hawkdove"]
 	agentList = ["ppo", "vpg", "dqn"]
 
-	subprocess.call("mkdir agents/", shell=True)
+	swarm = {}
 	for game in gameList:
-		subprocess.call("mkdir agents/" + game, shell=True)
+		swarm[game] = {}
 		for agentType in agentList:
-			subprocess.call("mkdir agents/" + game + "/" + agentType, shell=True)
-			get_agent(game, agentType)
+			swarm[game][agentType] = get_agent(game, agentType)
+
+	return swarm
+
+if __name__ == "__main__":
+	# gameList = ["bos", "pd", "hawkdove"]
+	# agentList = ["ppo", "vpg", "dqn"]
+
+	# subprocess.call("mkdir agents/", shell=True)
+	# for game in gameList:
+	# 	subprocess.call("mkdir agents/" + game, shell=True)
+	# 	for agentType in agentList:
+	# 		subprocess.call("mkdir agents/" + game + "/" + agentType, shell=True)
+	# 		get_agent(game, agentType)
+	a = setup()
+	print(a)
+
+
