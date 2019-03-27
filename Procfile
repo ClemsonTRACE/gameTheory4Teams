@@ -1,0 +1,1 @@
+web: gunicorn gameTheory4Teams/wsgi.py
