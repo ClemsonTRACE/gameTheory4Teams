@@ -3,6 +3,7 @@ from .utils import get_agent, payoffs
 import json
 from django.http import JsonResponse
 from pprint import pprint
+from .models import Game
 
 
 # Create your views here.
@@ -53,6 +54,19 @@ def twoByTwo(request, gameType, agentType):
 			if int(epoch) == int(r["numEpochs"]):
 				r["status"] = True
 				#add the datasaving part here
+				Game.objects.create(
+					game_type = r["game"],
+					opponent = r["opponent"],
+					model = r["model"],
+					status = r["status"],
+					numEpochs = r["numEpochs"],
+					numTurns = r["numTurns"],
+					gameState = r["gameState"],
+					payoffs = r["payoffs"],
+					epoch = r["epoch"],
+					turn = r["turn"],
+					surveyID = r["surveyID"],
+				)
 			else:
 				r["turn"] = 0
 				r["epoch"] = int(epoch) + 1
