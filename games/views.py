@@ -72,7 +72,8 @@ def twoByTwo(request, gameType, agentType):
 				r["turn"] = 0
 				r["epoch"] = int(epoch) + 1
 
-
+		agent.close()
+		
 		pprint(r)
 
 		# return render(request, "bos.html", {"agent": agentType})
