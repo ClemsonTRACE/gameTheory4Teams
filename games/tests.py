@@ -4,7 +4,7 @@ import time
 
 # Create your tests here.
 browser = webdriver.Chrome()
-browser.get("http://localhost:3000/#/bos/human/ppo")
+browser.get("hhttps://gametheoryteams.herokuapp.com/games/twoByTwo//#/bos/human/ppo")
 forwardBtn = browser.find_element_by_class_name("btn")
 forwardBtn.click()
 time.sleep(2)
