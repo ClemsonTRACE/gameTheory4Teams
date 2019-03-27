@@ -76,6 +76,7 @@ def get_agent(game, agentType):
 			a = subprocess.check_output("ls games/", shell=True)
 			print(a)
 			checkpointPath = base_path + "/games/agents/" + game + "/" + agentType + "/"
+			print(checkpointPath)
 			agent.restore(directory=checkpointPath, filename=None)
 			print("restoration successful after third attempt")
 		# agent.initialize()
