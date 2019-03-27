@@ -2,42 +2,44 @@ from tensorforce.agents import PPOAgent, DQNAgent, VPGAgent
 import subprocess
 import numpy as np
 import os
+from tqdm import tqdm
+
 
 
 # game = "bos"
 # agentType = "ppo"
 
+config = {
+	"bos": {
+		"states": {
+			"type":'float', "shape": (10,2, 1,) 
+		},
+		"actions": {
+			"type": "int", "num_values": 2
+		}
+	},
+	"pd": {
+		"states": {
+			"type":'float', "shape": (10,2, 1,) 
+		},
+		"actions": {
+			"type": "int", "num_values": 2
+		}
+	},
+	"hawkdove": {
+		"states": {
+			"type":'float', "shape": (10,2, 1,) 
+		},
+		"actions": {
+			"type": "int", "num_values": 2
+		}
+	}
+}
+
 def get_agent(game, agentType):
 
 	base_path = os.getcwd()
 	checkpointPath = base_path + "/games/agents/" + game + "/" + agentType + "/"
-
-	config = {
-		"bos": {
-			"states": {
-				"type":'float', "shape": (10,2, 1,) 
-			},
-			"actions": {
-				"type": "int", "num_values": 2
-			}
-		},
-		"pd": {
-			"states": {
-				"type":'float', "shape": (10,2, 1,) 
-			},
-			"actions": {
-				"type": "int", "num_values": 2
-			}
-		},
-		"hawkdove": {
-			"states": {
-				"type":'float', "shape": (10,2, 1,) 
-			},
-			"actions": {
-				"type": "int", "num_values": 2
-			}
-		}
-	}
 
 	if agentType == "vpg":
 		agent = VPGAgent(
@@ -66,16 +68,33 @@ def get_agent(game, agentType):
 		agent.restore(directory=checkpointPath, filename=None)
 	except Exception as e:
 		print("\nrestoration failed\n")
-		# print(e)
-		agent.initialize()
-		for i in range(10):
-			testState = np.full(config[game]["states"]["shape"], 0)
-			agent.act(testState)
-			agent.observe(reward=1, terminal=False)
-		agent.save(directory=checkpointPath, filename=None)
+		checkpointPath = base_path + "/agents/" + game + "/" + agentType + "/"
 
+		agent.initialize()
+
+
+		for x in tqdm(range(10000)):
+
+			testState = np.full(config[game]["states"]["shape"], 0)
+
+			for i in range(10):
+				moveA = agent.act(testState)
+				moveB = agent.act(testState)
+				rewards = payoffs(game, moveA, moveB)
+				if i < 10:
+					agent.observe(reward=rewards[0], terminal=False)
+					agent.observe(reward=rewards[1], terminal=False)
+				else: 
+					agent.observe(reward=rewards[0], terminal=True)
+					agent.observe(reward=rewards[1], terminal=True)
+
+				testState[i] = [[moveA], [moveB]]
+
+		agent.save(directory=checkpointPath, filename=None)
+		print("saving successful")
 
 	return agent
+
 
 def payoffs(game, aiMove, humanMove):
 	

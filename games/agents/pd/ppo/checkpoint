@@ -1,2 +1,2 @@
-model_checkpoint_path: "/Users/lbarberiscanoni/Lorenzo/Github/gameTheory4Teams_server/games/agents/pd/ppo/model-10"
-all_model_checkpoint_paths: "/Users/lbarberiscanoni/Lorenzo/Github/gameTheory4Teams_server/games/agents/pd/ppo/model-10"
+model_checkpoint_path: "/Users/lbarberiscanoni/Lorenzo/Github/gameTheory4Teams_server/games/agents/pd/ppo/model-200000"
+all_model_checkpoint_paths: "/Users/lbarberiscanoni/Lorenzo/Github/gameTheory4Teams_server/games/agents/pd/ppo/model-200000"
