@@ -73,7 +73,7 @@ def get_agent(game, agentType):
 			agent.restore(directory=checkpointPath, filename=None)
 			print("restoration successful after second attempt")
 		except Exception as e:
-			a = subprocess.check_output("cd games/", shell=True)
+			a = subprocess.check_output("ls games/", shell=True)
 			print(a)
 			checkpointPath = base_path + "/games/agents/" + game + "/" + agentType + "/"
 			agent.restore(directory=checkpointPath, filename=None)
