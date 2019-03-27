@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 "localhost", 
-"localhost:3000"
+"localhost:3000",
+"gametheoryteams.herokuapp.com"
 ]
 
 # Application definition
