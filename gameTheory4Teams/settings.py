@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
 "localhost", 
 "localhost:3000",
-"gametheoryteams.herokuapp.com"
+"gametheoryteams.herokuapp.com",
 ]
 
 # Application definition
@@ -59,9 +59,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
+    "lbarberiscanoni.github.io",
 )
 CORS_ORIGIN_REGEX_WHITELIST = (
     'localhost:3000',
+    "lbarberiscanoni.github.io",
 )
 
 ROOT_URLCONF = 'gameTheory4Teams.urls'
