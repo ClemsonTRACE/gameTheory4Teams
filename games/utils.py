@@ -75,7 +75,7 @@ def get_agent(game, agentType):
 		except Exception as e:
 			a = subprocess.check_output("ls games/", shell=True)
 			print(a)
-			print(os.cwd(), "vs", subprocess.check_output("pwd", shell=True))
+			print(os.getcwd(), "vs", subprocess.check_output("pwd", shell=True))
 			checkpointPath = "/games/agents/" + game + "/" + agentType + "/"
 			print(checkpointPath)
 			agent.restore(directory=checkpointPath, filename=None)
