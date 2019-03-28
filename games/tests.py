@@ -4,12 +4,13 @@ import time
 
 # Create your tests here.
 browser = webdriver.Chrome()
-browser.get("https://lbarberiscanoni.github.io/gt4teams_frontend/#/bos/human/ppo")
+# browser.get("https://lbarberiscanoni.github.io/gt4teams_frontend/#/bos/human/ppo")
+browser.get("localhost:3000/#/bos/human/ppo")
 forwardBtn = browser.find_element_by_class_name("btn")
 forwardBtn.click()
 time.sleep(2)
 moveBtn = browser.find_element_by_class_name("btn")
-for i in range(5):
+for i in range(30):
 	moveBtn.click()
 	browser.switch_to.alert.accept()
 	time.sleep(4)

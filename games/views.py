@@ -53,7 +53,7 @@ def twoByTwo(request, gameType, agentType):
 			action = agent.act(testState)
 
 
-		stuff = payoffs(gameType, action, r["move"])
+		stuff = payoffs(gameType, r["move"], action)
 
 		r["gameState"][epoch][turn] = [int(r["move"]), int(action)]
 		r["payoffs"][epoch][turn] = [stuff[0], stuff[1]]
