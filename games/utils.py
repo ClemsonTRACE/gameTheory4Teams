@@ -68,40 +68,40 @@ def get_agent(game, agentType):
 		agent.restore(directory=checkpointPath, filename=None)
 		print("restoration successful")
 	except Exception as e:
-		try:
-			checkpointPath = base_path + "/agents/" + game + "/" + agentType + "/"
-			agent.restore(directory=checkpointPath, filename=None)
-			print("restoration successful after second attempt")
-		except Exception as e:
-			a = subprocess.check_output("ls games/", shell=True)
-			print(a)
-			print(os.getcwd(), "vs", subprocess.check_output("pwd", shell=True))
-			checkpointPath = "./games/agents/" + game + "/" + agentType + "/"
-			print(checkpointPath)
-			agent.restore(directory=checkpointPath, filename=None)
-			print("restoration successful after third attempt")
-		# agent.initialize()
+		# try:
+		# 	checkpointPath = base_path + "/agents/" + game + "/" + agentType + "/"
+		# 	agent.restore(directory=checkpointPath, filename=None)
+		# 	print("restoration successful after second attempt")
+		# except Exception as e:
+		# 	a = subprocess.check_output("ls games/", shell=True)
+		# 	print(a)
+		# 	print(os.getcwd(), "vs", subprocess.check_output("pwd", shell=True))
+		# 	checkpointPath = "./games/agents/" + game + "/" + agentType + "/"
+		# 	print(checkpointPath)
+		# 	agent.restore(directory=checkpointPath, filename=None)
+		# 	print("restoration successful after third attempt")
+		agent.initialize()
 
 
-		# for x in tqdm(range(1)):
+		for x in tqdm(range(1)):
 
-		# 	testState = np.full(config[game]["states"]["shape"], 0)
+			testState = np.full(config[game]["states"]["shape"], 0)
 
-		# 	for i in range(10):
-		# 		moveA = agent.act(testState)
-		# 		moveB = agent.act(testState)
-		# 		rewards = payoffs(game, moveA, moveB)
-		# 		if i < 10:
-		# 			agent.observe(reward=rewards[0], terminal=False)
-		# 			agent.observe(reward=rewards[1], terminal=False)
-		# 		else: 
-		# 			agent.observe(reward=rewards[0], terminal=True)
-		# 			agent.observe(reward=rewards[1], terminal=True)
+			for i in range(10):
+				moveA = agent.act(testState)
+				moveB = agent.act(testState)
+				rewards = payoffs(game, moveA, moveB)
+				if i < 10:
+					agent.observe(reward=rewards[0], terminal=False)
+					agent.observe(reward=rewards[1], terminal=False)
+				else: 
+					agent.observe(reward=rewards[0], terminal=True)
+					agent.observe(reward=rewards[1], terminal=True)
 
-		# 		testState[i] = [[moveA], [moveB]]
-		# checkpointPath = "./games/agents/" + game + "/" + agentType + "/"
-		# agent.save(directory=checkpointPath, filename=None)
-		# print("saving successful")
+				testState[i] = [[moveA], [moveB]]
+		checkpointPath = "./games/agents/" + game + "/" + agentType + "/"
+		agent.save(directory=checkpointPath, filename=None)
+		print("saving successful")
 
 	return agent
 
