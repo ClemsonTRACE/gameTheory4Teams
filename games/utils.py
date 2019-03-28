@@ -141,7 +141,7 @@ def payoffs(game, humanMove, aiMove):
 		}
 	}
 
-	return config[game][aiMove][humanMove]
+	return config[game][humanMove][aiMove]
 
 def setup():
 	gameList = ["bos", "pd", "hawkdove"]
