@@ -76,14 +76,14 @@ def get_agent(game, agentType):
 			a = subprocess.check_output("ls games/", shell=True)
 			print(a)
 			print(os.getcwd(), "vs", subprocess.check_output("pwd", shell=True))
-			checkpointPath = "/games/agents/" + game + "/" + agentType + "/"
+			checkpointPath = "./games/agents/" + game + "/" + agentType + "/"
 			print(checkpointPath)
 			agent.restore(directory=checkpointPath, filename=None)
 			print("restoration successful after third attempt")
 		# agent.initialize()
 
 
-		# for x in tqdm(range(10000)):
+		# for x in tqdm(range(1)):
 
 		# 	testState = np.full(config[game]["states"]["shape"], 0)
 
@@ -99,7 +99,7 @@ def get_agent(game, agentType):
 		# 			agent.observe(reward=rewards[1], terminal=True)
 
 		# 		testState[i] = [[moveA], [moveB]]
-
+		# checkpointPath = "./games/agents/" + game + "/" + agentType + "/"
 		# agent.save(directory=checkpointPath, filename=None)
 		# print("saving successful")
 

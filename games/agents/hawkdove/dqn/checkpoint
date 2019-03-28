@@ -1,2 +1,2 @@
-model_checkpoint_path: "/Users/lbarberiscanoni/Lorenzo/Github/gameTheory4Teams_server/games/agents/hawkdove/dqn/model-200000"
-all_model_checkpoint_paths: "/Users/lbarberiscanoni/Lorenzo/Github/gameTheory4Teams_server/games/agents/hawkdove/dqn/model-200000"
+model_checkpoint_path: "model-20"
+all_model_checkpoint_paths: "model-20"
