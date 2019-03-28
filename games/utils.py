@@ -151,6 +151,7 @@ def setup():
 	for game in gameList:
 		swarm[game] = {}
 		for agentType in agentList:
+			print(game, agentType)
 			swarm[game][agentType] = get_agent(game, agentType)
 
 	return swarm
