@@ -1,0 +1,110 @@
+ok so let's get started
+	first, let's figure out exactly what a 3PD entails
+	how did I represent the PD matrix to begin with?
+		"pd": {
+			0: {
+				0: (-1, -1),
+				1: (-3, 0)
+			},
+			1: {
+				0: (0, -3),
+				1: (-2, -2)
+			}
+		},
+	so a 3PD would be a nested ob of this
+		p1, then p2, then p3
+		-1 for mutual betrayal, -2 for one-way betrayal, 0 for cooperation, 1 succesfful betrayal 
+		what should DCC be for the Cs? 
+			CCC > CCD > CDD bc the player should be better off if the others cooperate
+		let's double check the conditions
+			DCC > CCC bc (1, -2, -2) > (0, 0, 0)
+			DDD > CDD bc (-2.5, -2.5, -2.5) > (-3, -1, -1)
+			DCD > CCD bc (-1, -3, -1) > (-2, -2, 1)
+			DCC > DCD > DDD bc (1, -2, -2) > (-1, -3, -1) > (-2.5, -2.5, -2.5)
+			CCC > CCD > CDD bc (0, 0, 0) > (-2, -2, 1) > (-3, -1, -1)
+			CCD > DDD bc (-2, -2, 1) > (-2.5, -2.5, -2.5)
+				wait, this doesn't make sense
+					being succesfully betrayed upon should be worse so wtf is this person talkign about
+			CCC > DCD bc (0, 0, 0) > (-1, -3, -1)
+		C: {
+			C: {
+				C: (0, 0, 0)
+				D: (-2, -2, 1)
+			}
+			D: {
+				C: (-2, 1, -2)
+				D: (-3, -1, -1)
+			}
+		}
+		D: {
+			C: {
+				C: (1, -2, -2)
+				D: (-1, -3, -1)
+			}
+			D: {
+				C: (-1, -1, -3)
+				D: (-2.5, -2.5, -2.5)
+			}
+		}
+	dude you are so dumb, it was right there for you lol (https://www.classes.cs.uchicago.edu/archive/1998/fall/CS105/Project/node6.html)
+		C: {
+			C: {
+				C: (7, 7, 7)
+				D: (3, 3, 9)
+			}
+			D: {
+				C: (3, 9, 3)
+				D: (0, 5, 5)
+			}
+		}
+		D: {
+			C: {
+				C: (9, 3, 3)
+				D: (5, 0, 5)
+			}
+			D: {
+				C: (5, 5, 0)
+				D: (1, 1, 1)
+			}
+		}
+
+ok so now I'm updating the config on util
+	is 0 cooperating or defecting? 
+		0: {
+			0: (-1, -1),
+			1: (-3, 0)
+		},
+		1: {
+			0: (0, -3),
+			1: (-2, -2)
+		}
+
+		seems pretty clear that (0, 0) is CC bc (0, 0) > (1, 1) which is DD
+	the action space is the same, but the state space is not
+		pd's state space is "shape": (10,2, 1,) 
+		10 iterations, 2 players, 1 move? 
+			does this even make sense
+		if you look at view.py, then "testState = [[[2, 1], [2, 1], [2, 1]]]" so it's 10 lists of 2 values
+		yea, let's try (10, 3, 1)
+
+	now I have to make sure the function in view
+
+
+how to support 2 humans
+	humanA moves, update to Firebase
+	humanB moves, update to Firebase
+		front-end checks for both moves have been submitted on Firebase
+		only then we make the post to the server
+
+
+ok so now let's do testing
+	first we'll do a test with 2 AIs, then we'll do a test with 2-3 humans
+		this should be easy bc I can just create a condition where the agents ain't called
+
+
+
+
+
+
+
+

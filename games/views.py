@@ -53,7 +53,7 @@ def twoByTwo(request, gameType, agentType):
 			action = agent.act(testState)
 
 
-		stuff = payoffs(gameType, r["move"], action)
+		stuff = payoffs(gameType, [r["move"], action])
 
 		r["gameState"][epoch][turn] = [int(r["move"]), int(action)]
 		r["payoffs"][epoch][turn] = [stuff[0], stuff[1]]
@@ -97,8 +97,63 @@ def pull(request):
 
 	return JsonResponse(stuff)
 
-def centipede(request, agentType):
-	return render(request, "centipede.html")
+def three_pd(request, agentType):
 
-def ultimatum(request, agentType):
-	return render(request, "ultimatum.html")
+	if(request.method == "POST"):
+		agent = swarm["3pd"][agentType]
+
+		try:
+			r = json.loads(request.body)
+			r = json.loads(r)
+		except:
+			r = request.body.decode('utf-8')
+			r = json.dumps(r)
+			r = json.loads(r)
+			r = json.loads(r)
+		# pprint(r)
+
+		epoch = str(r["epoch"])
+		turn = str(r["turn"])
+
+		testState = list(r["gameState"][epoch].values())
+		testState = [testState]
+		try:
+			action_a = agent.act(testState)
+			action_b = agent.act(testState)
+		except Exception as e:
+			print(e)
+			time.sleep(2)
+			action_a = agent.act(testState)
+			action_b = agent.act(testState)
+
+
+		stuff = payoffs("3pd", [r["move"], action_a, action_b])
+
+		r["gameState"][epoch][turn] = [int(r["move"]), int(action_a), int(action_b)]
+		r["payoffs"][epoch][turn] = [stuff[0], stuff[1], stuff[2]]
+		r["turn"] = int(turn) + 1
+
+		if int(turn) == int(r["numTurns"]): 
+			if int(epoch) == int(r["numEpochs"]):
+				r["status"] = True
+				#add the datasaving part here
+				Game.objects.create(
+					game_type = r["game"],
+					opponent = r["opponent"],
+					model = r["model"],
+					status = r["status"],
+					numEpochs = r["numEpochs"],
+					numTurns = r["numTurns"],
+					gameState = r["gameState"],
+					payoffs = r["payoffs"],
+					epoch = r["epoch"],
+					turn = r["turn"],
+					surveyID = r["surveyID"],
+				)
+			else:
+				r["turn"] = 0
+				r["epoch"] = int(epoch) + 1
+
+		pprint(r)
+
+		return JsonResponse(r)

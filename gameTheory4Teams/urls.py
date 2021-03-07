@@ -20,7 +20,6 @@ from games import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('games/twoByTwo/<str:gameType>/<str:agentType>', views.twoByTwo),
-    path('games/centipede/<str:agentType>', views.centipede),
-    path('games/ultimatum/<str:agentType>', views.ultimatum),
+    path('games/3pd/<str:agentType>', views.three_pd),
     path('games/pull', views.pull)
 ]
