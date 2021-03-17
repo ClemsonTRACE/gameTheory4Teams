@@ -6,8 +6,8 @@ from tqdm import tqdm
 
 
 
-# game = "bos"
-# agentType = "ppo"
+#game = "3pd"
+#agentType = "ppo"
 
 config = {
 	"bos": {
@@ -45,8 +45,9 @@ config = {
 }
 
 def get_agent(game, agentType):
+	count = 1
 
-	base_path = os.getcwd()
+	base_path = '.'
 	checkpointPath = base_path + "/games/agents/" + game + "/" + agentType + "/"
 
 	if agentType == "vpg":
@@ -77,31 +78,27 @@ def get_agent(game, agentType):
 			print("restoration successful")
 		except Exception as e:
 			agent.initialize()
+		for x in tqdm(range(1000001)):
+			testState = np.full(config[game]["states"]["shape"], None)
 
-
-			for x in tqdm(range(1)):
-
-				testState = np.full(config[game]["states"]["shape"], 0)
-
-				for i in range(10):
-					moveA = agent.act(testState)
-					moveB = agent.act(testState)
-					moveC = agent.act(testState)
-					rewards = payoffs(game, [moveA, moveB, moveC])
-					if i < 10:
-						agent.observe(reward=rewards[0], terminal=False)
-						agent.observe(reward=rewards[1], terminal=False)
-						agent.observe(reward=rewards[2], terminal=False)
-					else: 
-						agent.observe(reward=rewards[0], terminal=True)
-						agent.observe(reward=rewards[1], terminal=True)
-						agent.observe(reward=rewards[2], terminal=False)
-
-
-					testState[i] = [[moveA], [moveB], [moveC]]
-			checkpointPath = "./games/agents/" + game + "/" + agentType + "/"
-			agent.save(directory=checkpointPath, filename=None)
-			print("saving successful")
+			for i in range(10):
+				moveA = agent.act(testState)
+				moveB = agent.act(testState)
+				moveC = agent.act(testState)
+				rewards = payoffs(game, [moveA, moveB, moveC])
+				if i < 9:
+					agent.observe(reward=rewards[0], terminal=False)
+					agent.observe(reward=rewards[1], terminal=False)
+					agent.observe(reward=rewards[2], terminal=False)
+				else: 
+					agent.observe(reward=rewards[0], terminal=False)
+					agent.observe(reward=rewards[1], terminal=False)
+					agent.observe(reward=rewards[2], terminal=True)
+				testState[i] = [[moveA], [moveB], [moveC]]
+			if x%1000 == 0:
+				checkpointPath = "../games/agents/" + game + "/" + agentType + "/"
+				agent.save(directory=checkpointPath, filename=None)
+				#print("saving successful")
 	else:
 		try:
 			agent.restore(directory=checkpointPath, filename=None)
@@ -121,8 +118,7 @@ def get_agent(game, agentType):
 			# 	print("restoration successful after third attempt")
 			agent.initialize()
 
-
-			for x in tqdm(range(1)):
+			for x in tqdm(range(count)):
 
 				testState = np.full(config[game]["states"]["shape"], 0)
 
@@ -143,7 +139,6 @@ def get_agent(game, agentType):
 			print("saving successful")
 
 	return agent
-
 
 def payoffs(game, moves):
 	
@@ -212,7 +207,7 @@ def payoffs(game, moves):
 	return _payoffs
 
 def setup():
-	gameList = ["bos", "pd", "hawkdove", "3pd"]
+	gameList = ["3pd"]
 	agentList = ["ppo", "vpg", "dqn"]
 
 	swarm = {}
