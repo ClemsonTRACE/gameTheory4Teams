@@ -78,27 +78,27 @@ def get_agent(game, agentType):
 			print("restoration successful")
 		except Exception as e:
 			agent.initialize()
-		for x in tqdm(range(1000001)):
-			testState = np.full(config[game]["states"]["shape"], None)
+			for x in tqdm(range(1000001)):
+				testState = np.full(config[game]["states"]["shape"], None)
 
-			for i in range(10):
-				moveA = agent.act(testState)
-				moveB = agent.act(testState)
-				moveC = agent.act(testState)
-				rewards = payoffs(game, [moveA, moveB, moveC])
-				if i < 9:
-					agent.observe(reward=rewards[0], terminal=False)
-					agent.observe(reward=rewards[1], terminal=False)
-					agent.observe(reward=rewards[2], terminal=False)
-				else: 
-					agent.observe(reward=rewards[0], terminal=False)
-					agent.observe(reward=rewards[1], terminal=False)
-					agent.observe(reward=rewards[2], terminal=True)
-				testState[i] = [[moveA], [moveB], [moveC]]
-			if x%1000 == 0:
-				checkpointPath = "../games/agents/" + game + "/" + agentType + "/"
-				agent.save(directory=checkpointPath, filename=None)
-				#print("saving successful")
+				for i in range(10):
+					moveA = agent.act(testState)
+					moveB = agent.act(testState)
+					moveC = agent.act(testState)
+					rewards = payoffs(game, [moveA, moveB, moveC])
+					if i < 9:
+						agent.observe(reward=rewards[0], terminal=False)
+						agent.observe(reward=rewards[1], terminal=False)
+						agent.observe(reward=rewards[2], terminal=False)
+					else: 
+						agent.observe(reward=rewards[0], terminal=False)
+						agent.observe(reward=rewards[1], terminal=False)
+						agent.observe(reward=rewards[2], terminal=True)
+					testState[i] = [[moveA], [moveB], [moveC]]
+				if x%1000 == 0:
+					# checkpointPath = "../games/agents/" + game + "/" + agentType + "/"
+					agent.save(directory=checkpointPath, filename=None)
+					# print("saving successful")
 	else:
 		try:
 			agent.restore(directory=checkpointPath, filename=None)
