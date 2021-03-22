@@ -110,31 +110,34 @@ def three_pd(request, agentType):
 			r = json.dumps(r)
 			r = json.loads(r)
 			r = json.loads(r)
-		# pprint(r)
+		pprint(r)
 
 		epoch = str(r["epoch"])
 		turn = str(r["turn"])
 
-		testState = list(r["gameState"][epoch].values())
-		testState = [testState]
-		try:
-			action_a = agent.act(testState)
-			action_b = agent.act(testState)
-		except Exception as e:
-			print(e)
-			time.sleep(2)
-			action_a = agent.act(testState)
-			action_b = agent.act(testState)
+		actions = list(r["moves"].values())
+		numAIs = 3 - len(actions)
+		for i in range(numAIs):
+			testState = list(r["gameState"][epoch].values())
+			testState = [testState]
+			try:
+				action = agent.act(testState)
+				actions.append(action)
+			except Exception as e:
+				print(e)
+				time.sleep(2)
+				action = agent.act(testState)
+				actions.append(action)
+
+		stuff = payoffs("3pd", actions)
 
 
-		stuff = payoffs("3pd", [r["move"], action_a, action_b])
-
-		r["gameState"][epoch][turn] = [int(r["move"]), int(action_a), int(action_b)]
+		r["gameState"][epoch][turn] = [int(action) for action in actions]
 		r["payoffs"][epoch][turn] = [stuff[0], stuff[1], stuff[2]]
 		r["turn"] = int(turn) + 1
 
-		if int(turn) == int(r["numTurns"]): 
-			if int(epoch) == int(r["numEpochs"]):
+		if int(r["turn"]) == int(r["numTurns"]): 
+			if int(r["epoch"]) == int(r["numEpochs"]):
 				r["status"] = True
 				#add the datasaving part here
 				Game.objects.create(
@@ -153,7 +156,5 @@ def three_pd(request, agentType):
 			else:
 				r["turn"] = 0
 				r["epoch"] = int(epoch) + 1
-
-		pprint(r)
 
 		return JsonResponse(r)
