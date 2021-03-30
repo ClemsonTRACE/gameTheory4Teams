@@ -134,7 +134,6 @@ def three_pd(request, agentType):
 
 		r["gameState"][epoch][turn] = [int(action) for action in actions]
 		r["payoffs"][epoch][turn] = [stuff[0], stuff[1], stuff[2]]
-		r["turn"] = int(turn) + 1
 
 		if int(r["turn"]) == int(r["numTurns"]): 
 			if int(r["epoch"]) == int(r["numEpochs"]):
@@ -142,7 +141,6 @@ def three_pd(request, agentType):
 				#add the datasaving part here
 				Game.objects.create(
 					game_type = r["game"],
-					opponent = r["opponent"],
 					model = r["model"],
 					status = r["status"],
 					numEpochs = r["numEpochs"],
@@ -156,5 +154,7 @@ def three_pd(request, agentType):
 			else:
 				r["turn"] = 0
 				r["epoch"] = int(epoch) + 1
+		else:
+			r["turn"] = int(turn) + 1
 
 		return JsonResponse(r)
