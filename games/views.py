@@ -87,15 +87,15 @@ def twoByTwo(request, gameType, agentType):
 		# return render(request, "bos.html", {"agent": agentType})
 		return JsonResponse(r)
 
-def pull(request):
-	dataPoints = Game.objects.values()
-	stuff = {}
-	i = 0
-	for el in dataPoints:
-		stuff[i] = el
-		i += 1
+# def pull(request):
+# 	dataPoints = Game.objects.values()
+# 	stuff = {}
+# 	i = 0
+# 	for el in dataPoints:
+# 		stuff[i] = el
+# 		i += 1
 
-	return JsonResponse(stuff)
+# 	return JsonResponse(stuff)
 
 def three_pd(request, agentType):
 
