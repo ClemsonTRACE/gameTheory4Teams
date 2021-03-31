@@ -6,8 +6,22 @@ from pprint import pprint
 from .models import Game
 from django.core import serializers
 import time
+import pyrebase
 
 swarm = setup()
+
+firebase_config = {
+	"apiKey": "AIzaSyD3xQP8HYecN0_XOw-xFKxAwnc7P__dNU0",
+    "authDomain": "trace-2fdd2.firebaseapp.com",
+    "databaseURL": "https://trace-2fdd2-default-rtdb.firebaseio.com",
+    "projectId": "trace-2fdd2",
+    "storageBucket": "trace-2fdd2.appspot.com",
+    "messagingSenderId": "514150577849",
+    "appId": "1:514150577849:web:a9abfd0d0f7c2acde8cd68"
+};
+
+firebase = pyrebase.initialize_app(firebase_config)
+db = firebase.database()
 
 
 # Create your views here.
@@ -131,6 +145,7 @@ def three_pd(request, agentType):
 
 		stuff = payoffs("3pd", actions)
 
+		firebase_path =	"gt4t/" + str(r["numHumans"]) + "/" + r["sessionID"] + "/games/game_" + epoch + "/turn_" + turn
 
 		r["gameState"][epoch][turn] = [int(action) for action in actions]
 		r["payoffs"][epoch][turn] = [stuff[0], stuff[1], stuff[2]]
@@ -156,5 +171,9 @@ def three_pd(request, agentType):
 				r["epoch"] = int(epoch) + 1
 		else:
 			r["turn"] = int(turn) + 1
+
+		r["players_ready"] = True
+		db.child(firebase_path).update({"outcome": r})
+
 
 		return JsonResponse(r)
