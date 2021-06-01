@@ -37,5 +37,5 @@ tensorflow-estimator==1.13.0
 -e git+https://github.com/tensorforce/tensorforce.git@6e770a732d5c40ed9cff56bce6b2d3d7443aeae9#egg=Tensorforce
 termcolor==1.1.0
 tqdm==4.31.1
-urllib3==1.24.1
+urllib3==1.26.5
 Werkzeug==0.14.1
